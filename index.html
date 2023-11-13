@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Геолокация</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="selectize.css" />
+    <script
+      src="https://api-maps.yandex.ru/2.1/?apikey=78cb2eca-0745-429e-91c4-e97c59a655e0&lang=ru_RU"
+      type="text/javascript"
+    ></script>
+  </head>
+  <body class="page">
+    <div class="aside-wrapper">
+      <img src="./images/arrow-left.svg" id="aside-btn" />
+      <nav class="nav">
+        <ul class="aside">
+          <li><a class="aside-item" href="#">Главная страница</a></li>
+          <li class="aside-list">
+            <a class="aside-item" href="#">Электронный архив</a>
+          </li>
+          <li class="aside-list">
+            <a class="aside-item" href="#">Личный кабинет</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div id="map" style="width: 100vw; height: 100vh" class="map"></div>
+    <main class="search-panel">
+      <div class="panel">
+        <header class="header">
+          <img
+            src="https://archive74.ru/sites/default/files/logo_02_full_color_0_0.png"
+            alt="логотип"
+            class="header__logo"
+          />
+          <div class="header-wrapper">
+            <h3 class="header__title">
+              Объединенный государственный архив Челябинской области
+            </h3>
+            <h3 class="header__title">Геолокация</h3>
+          </div>
+        </header>
+        <div class="search-container">
+          <form class="form">
+            <div class="form__group">
+              <h3 class="select__title">Область</h3>
+              <select
+                id="region"
+                name="region"
+                placeholder="Выберите область"
+                class="js-selectize"
+              >
+                <option value=""></option>
+                <option value="Челябинская область">Челябинская область</option>
+                <option value="Курганская область">Курганская область</option>
+                <option value="Свердловская область">
+                  Свердловская область
+                </option>
+              </select>
+            </div>
+            <div class="form__group">
+              <h3 class="select__title">Район</h3>
+              <select
+                id="area"
+                name="area"
+                placeholder="Выберите район"
+                class="js-selectize"
+              >
+                <option value=""></option>
+                <option value="Красноармейский район">
+                  Красноармейский район
+                </option>
+                <option value="Катавский район">Катавский район</option>
+                <option value="Саткинский район">Саткинский район</option>
+              </select>
+            </div>
+            <div class="form__group">
+              <h3 class="select__title">Населенный пункт</h3>
+              <select
+                id="community"
+                name="community"
+                placeholder="Выберите населенный пункт"
+                class="js-selectize"
+              >
+                <option value=""></option>
+                <option value="Кабанское">село Кабанское</option>
+                <option value="Наваринский">поселок Наваринский</option>
+                <option value="крепость Уйская">крепость Уйская</option>
+              </select>
+            </div>
+
+            <div class="advanced-search">
+              <input
+                id="checkbox"
+                class="filter__checkbox"
+                type="checkbox"
+                name="checkbox"
+              />
+              <p class="advanced-list">расширенный список</p>
+            </div>
+            <div class="form__group-advanced" id="show-div">
+              <label>
+                <h3 class="select__title">Год</h3>
+                <input
+                  class="search__input"
+                  type="search"
+                  placeholder="Введите год"
+                  name="year"
+                  required
+                />
+              </label>
+              <div class="form__group">
+                <h3 class="select__title">Конфессия</h3>
+                <select
+                  id="religion"
+                  name="religion"
+                  placeholder="Выберите конфессию"
+                  class="js-selectize"
+                >
+                  <option value=""></option>
+                  <option value="Православие">Православие</option>
+                  <option value="Ислам">Ислам</option>
+                  <option value="Иудаизм">Иудаизм</option>
+                  <option value="Католичество">Католичество</option>
+                  <option value="Старообрядчество">Старообрядчество</option>
+                </select>
+              </div>
+            </div>
+            <div class="button-container">
+              <button class="button-search" id="button-search" type="submit">
+                Искать
+              </button>
+              <a href="" class="reset-form">Сбросить</a>
+            </div>
+          </form>
+        </div>
+      </div>
+      <section class="search-popup" id="search-popup">
+        <div class="wrapper">
+          <div class="card">
+            <div class="card__info">
+              <div class="card__info-type">
+                <p class="card__type">Метрическая книга</p>
+                <p class="card__year">1905 год</p>
+              </div>
+              <div class="card__block">
+                <h5 class="card__block-item">Современное название:</h5>
+                <p class="card__block-name">
+                  Село Кабанское, Челябинский уезд, Оренбургская губерния
+                </p>
+              </div>
+              <div class="card__block">
+                <h4 class="card__block-item">Название до 1917 г.:</h4>
+                <p class="card__block-name">
+                  Село Кабанское, Челябинский уезд, Оренбургская губерния
+                </p>
+              </div>
+              <div class="card__block" id="religion">
+                <h5 class="card__block-item">Конфессия:</h5>
+                <p class="card__block-name">Православие</p>
+              </div>
+              <div class="card__block" id="church">
+                <h5 class="card__block-item">Религиозное учреждение:</h5>
+                <p class="card__block-name">Духо-Сошествиевская церковь</p>
+              </div>
+              <div class="card__list">
+                <div class="card__item">
+                  <span class="card__item-arch">Фонд:</span>
+                  И-226
+                </div>
+                <div class="card__item">
+                  <span class="card__item-arch">Опись:</span>
+                  5
+                </div>
+                <div class="card__item">
+                  <span class="card__item-arch">Дело:</span>
+                  55
+                </div>
+                <div class="card__item"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="button-close" id="button-close">
+          <img src="./images/remove.svg" class="close-img" />
+        </div>
+      </section>
+    </main>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://snipp.ru/cdn/microplugin.js/src/microplugin.js"></script>
+    <script src="https://snipp.ru/cdn/sifter.js/sifter.min.js"></script>
+    <script src="https://snipp.ru/cdn/selectize.js/0.12.6/dist/js/selectize.min.js"></script>
+    <script>
+      function toggle() {
+        const div = document.getElementById("show-div");
+        if (this.checked) {
+          div.style.display = "block";
+        } else {
+          div.style.display = "none";
+        }
+      }
+      document.getElementById("checkbox").onchange = toggle;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const popupBtn = document.querySelector(".button-search");
+        const popup = document.querySelector(".search-popup");
+        const closeBtn = document.querySelector(".button-close");
+
+        popupBtn.addEventListener("click", function () {
+          popup.classList.add("show");
+        });
+
+        closeBtn.addEventListener("click", function () {
+          popup.classList.remove("show");
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $(".js-selectize").selectize();
+      });
+
+      $(document).ready(function () {
+        $("#aside-btn").hover(function () {
+          $(".aside-wrapper").css("width", "auto");
+        });
+
+        $(".aside-wrapper").mouseleave(function () {
+          $(this).css("width", "35px");
+        });
+
+        $(window).on("scroll", function () {
+          var scroll = $(window).scrollTop();
+          if (scroll > 250) {
+            $(".aside-wrapper").css("width", "auto");
+          } else {
+            $(".aside-wrapper").css("width", "35px");
+          }
+        });
+      });
+    </script>
+    <script type="text/javascript">
+      ymaps.ready(init);
+
+      function init() {
+        var myMap = new ymaps.Map("map", {
+          center: [55.17400104, 61.38252903],
+          zoom: 8,
+        });
+
+        objectManager = new ymaps.ObjectManager({
+          clusterize: true,
+
+          gridSize: 32,
+
+          clusterDisableClickZoom: true,
+        });
+        myMap.geoObjects.add(objectManager);
+
+        objectManager.add({
+          type: "FeatureCollection",
+
+          features: [
+            {
+              type: "Feature",
+              id: 1,
+              geometry: {
+                type: "Point",
+                coordinates: [54.79549342, 62.3969505],
+              },
+              properties: {
+                balloonContentHeader: "д. Арыкова",
+                balloonContentBody: "5 описей",
+              },
+            },
+
+            {
+              type: "Feature",
+              id: 2,
+              geometry: {
+                type: "Point",
+                coordinates: [55.51888696, 61.91355206],
+              },
+              properties: {
+                balloonContentHeader: "д. Аязгулова",
+                balloonContentBody: "7 описей",
+              },
+            },
+
+            {
+              type: "Feature",
+              id: 3,
+              geometry: {
+                type: "Point",
+                coordinates: [55.36005028, 60.88544582],
+              },
+              properties: {
+                balloonContentHeader: "д. Бажикаева",
+                balloonContentBody: "12 описей",
+              },
+            },
+          ],
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'PlayfairDisplay-Regular';
+    font-weight: 400;
+    src: url(../vendor/fonts/PlayfairDisplay-Regular.woff2) format("woff2"),
+    url(../vendor/fonts/PlayfairDisplay-Regular.woff) format("woff");
+}
+@font-face {
+    font-family: 'PlayfairDisplay-Bold';
+    font-weight: 700;
+    src: url(../vendor/fonts/PlayfairDisplay-Bold.woff2) format("woff2"),
+    url(../vendor/fonts/PlayfairDisplay-Bold.woff) format("woff");
+}
+@font-face {
+    font-family: 'PlayfairDisplay-Black';
+    font-weight: 900;
+    src: url(../vendor/fonts/PlayfairDisplay-Black.woff2) format("woff2"),
+    url(../vendor/fonts/PlayfairDisplay-Black.woff) format("woff");
+}
